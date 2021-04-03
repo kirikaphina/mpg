@@ -1,0 +1,213 @@
+ggplot2::mpg
+view(mpg)
+?mpg
+ggplot(data=mpg)
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=displ, y=hwy))
+   
+#an aesthetic is a visual property of the objects in your plot. Aesthetics include things like the size, the shape or the colour of your points. You can convey information about your data by mapping the aesthetics in your plot to thhe variables in your dataset.  
+
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=displ, y=hwy, color = class))
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=displ, y=hwy,size= class, color = class))
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=displ, y=hwy, alpha = class))
+ggplot(data=mpg) +
+   geom_point(mapping = aes(x=displ, y=hwy), color = "blue")
+#use https://d33wubrfki0l68.cloudfront.net/e28a1b57b6622cf67fd8a7e01c6a9955914f8fe9/visualize_files/figure-html/shapes-1.png
+
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=displ, y=hwy)) +
+  facet_wrap(~class, nrow=2)
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=displ, y=hwy)) +
+  facet_grid(drv ~ cyl)
+
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=displ, y=hwy))
+ggplot(data=mpg) +
+   geom_smooth(mapping = aes(x=displ, y=hwy))
+ggplot(data=mpg) +
+   geom_smooth(mapping = aes(x=displ, y=hwy, linetype = drv)) ?geom_smooth.ggplot
+#  https://exts.ggplot2.tidyverse.org/gallery/ 
+#https://rstudio.com/resources/cheatsheets   
+
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=displ, y=hwy)) +
+  geom_smooth(mapping = aes(x=displ, y=hwy))
+ggplot(data=mpg, mapping=aes(x=displ,y=hwy))+
+  geom_point() +
+  geom_smooth()
+ggplot(data=mpg, mapping=aes(x=displ,y=hwy))+
+  geom_point(mapping = aes(color = class)) +
+  geom_smooth()
+
+ggplot2::diamonds
+view(diamonds)
+ggplot(data=diamonds) +
+geom_bar(mapping = aes(x = cut))
+
+library(ggplot2)
+library(maps)
+library(ggmap)
+nz <- map_data("nz")
+
+ggplot(nz, aes(long, lat, group = group))+
+  geom_polygon(fill = 'white', color = 'black')
+
+ggplot(nz, aes(long, lat, group = group))+
+  geom_polygon(fill = 'white', color = 'black')+
+  coord_quickmap()
+?stat_bin
+
+ggplot(data=mpg, mapping = aes(x = cut,fill = clarity))+
+  geom_bar(alpha)
+bar <- ggplot(data = diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = cut),
+    show.legend = FALSE,
+    width = 1
+  ) +
+  theme(aspect.ratio = 1) +
+  labs(x = NULL, y = NULL)
+
+bar + coord_flip()
+bar + coord_polar()
+
+install.packages("nycflights13")
+library(nycflights13)
+flights
+view(flights)
+stats::lag()
+stats::filter()
+library(dplyr)
+library(tidyverse)
+
+filter(flights, month == 1, day == 1)
+jan1 <- filter(flights, month == 1, day == 1)
+view(jan1)
+
+sqrt(2) ^ 2 == 2
+1 / 49 * 49 == 1
+near(sqrt(2) ^ 2, 2)
+near(1 / 49 * 49, 1)
+filter(flights, month == 11| month == 12)
+#https://d33wubrfki0l68.cloudfront.net/01f4b6d39d2be8269740a3ad7946faa79f7243cf/8369a/diagrams/transform-logical.png 
+
+nov_dec <- filter(flights, month %in% c(11,12))
+view(nov_dec)
+filter(flights, !(arr_delay > 120 | dep_delay > 120))
+filter(flights, arr_delay <= 120 | dep_delay <= 120)
+arrange(flights, year, month, day)
+arrange(flights, desc(dep_delay)) 
+select(flights, year, month, day)
+select(flights, year:day)
+select(flights, -(year:day))
+#There are a number of helper functions you can use within select():starts_with("abc"): matches names that begins with "abc", ends_with("xyz"): matches names that end with "xyz", contins("jkl"): matches names that contains"jkl", matches("(.)\\1"): selects variables that match a regular expression. This one matches any variables that contai repeated characters. Learn more about regular expressions in strings, num_range("x",1:3): matches x1, x2 and x3.
+?select
+g <- rename(flights, tail_num = tailnum)
+view(g)
+select(flights, time_hour, air_time, everything())
+
+?mpg
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()
+
+ggplot() + 
+  geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = drv, y = cyl))
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy) + 
+  facet_wrap(~ class, nrow = 2))
+
+ggplot(data = mpg, mapping = aes(colour = displ < 5)) + 
+  geom_point() + 
+  geom_smooth()
+ 
+install.packages("gridExtra")
+install.packages("cowplot")
+
+ggplot(data = mpg) +
+  geom_line(mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+  geom_box(mapping = aes(x = displ, y = hwy))
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() +
+  geom_smooth(se = FALSE)
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() +
+  geom_smooth(mapping = aes(group = drv), se = FALSE)
+ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color=drv)) + 
+  geom_point() +
+  geom_smooth(se = FALSE)
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color=drv)) +
+  geom_smooth(se = FALSE)
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color=drv)) +
+  geom_smooth(se = FALSE, mapping = aes(linetype = drv))
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color=drv)) + 
+  geom_point(shape = 21, color = "white", stroke = 1)
+theme_set(theme_gray())
+plot_grid(p1, p2, p3, p4, p5, p6, labels=c("1","2","3", "4","5","6"), ncol=2, nrow = 3)
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color=drv)) +
+  geom_smooth(se = FALSE, mapping = aes(linetype = drv))
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color=drv)) +
+  geom_point(shape = 21, color = "white", stroke = 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    
